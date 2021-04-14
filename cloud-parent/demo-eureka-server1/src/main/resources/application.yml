@@ -1,0 +1,20 @@
+server:
+  port: 18061
+eureka:
+  instance:
+    # 应?名称，会在Eureka中作为服务的id标识
+    hostname: eurekaServer1
+  client:
+    #集群模式下，需向注册中心注册自己 设置为true
+    registerWithEureka: true
+    #集群模式下，需要去检索服务,设置为true
+    fetchRegistry: true
+    serviceUrl:
+      defaultZone: http://eurekaServer2:18062/eureka
+  dashboard:
+    enabled: true
+spring:
+  freemarker:
+    prefer-file-system-access: false
+  application:
+    name: demo-eureka-server1
