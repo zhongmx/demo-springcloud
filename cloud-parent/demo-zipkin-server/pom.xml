@@ -1,0 +1,53 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 https://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+    <parent>
+        <groupId>org.fengabner</groupId>
+        <artifactId>cloud-parent</artifactId>
+        <version>1.0-SNAPSHOT</version>
+        <relativePath/> <!-- lookup parent from repository -->
+    </parent>
+    <groupId>com.fengabner</groupId>
+    <artifactId>demo-zipkin-server</artifactId>
+    <version>0.0.1-SNAPSHOT</version>
+    <name>demo-zipkin-server</name>
+    <description>Zipkin</description>
+    <properties>
+        <java.version>11</java.version>
+        <zipkin-server.version>2.12.3</zipkin-server.version>
+        <zipkin-server-ui.version>2.12.3</zipkin-server-ui.version>
+    </properties>
+    <dependencies>
+        <!--zipkin-server的依赖坐标-->
+        <dependency>
+            <groupId>io.zipkin.java</groupId>
+            <artifactId>zipkin-server</artifactId>
+            <version>${zipkin-server.version}</version>
+            <exclusions>
+                <!--排除掉log4j2的传递依赖，避免和springboot依赖的日志组件冲突-->
+                <exclusion>
+                    <groupId>org.springframework.boot</groupId>
+                    <artifactId>spring-boot-starter-log4j2</artifactId>
+                </exclusion>
+            </exclusions>
+        </dependency>
+
+        <!--zipkin-server ui界面依赖坐标-->
+        <dependency>
+            <groupId>io.zipkin.java</groupId>
+            <artifactId>zipkin-autoconfigure-ui</artifactId>
+            <version>${zipkin-server-ui.version}</version>
+        </dependency>
+    </dependencies>
+
+    <build>
+        <plugins>
+            <plugin>
+                <groupId>org.springframework.boot</groupId>
+                <artifactId>spring-boot-maven-plugin</artifactId>
+            </plugin>
+        </plugins>
+    </build>
+
+</project>

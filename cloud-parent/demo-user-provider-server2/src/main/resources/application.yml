@@ -3,10 +3,26 @@ server:
 spring:
   application:
     name: demo-user-provider-server
+  zipkin:
+    base-url: http://127.0.0.1:9411 # zipkin server的请求地址
+    sender:
+      # web 客户端将踪迹日志数据通过网络请求的方式传送到服务端，另外还有配置
+      # kafka/rabbit 客户端将踪迹日志数据传递到mq进行中转
+      type: web
+  sleuth:
+    sampler:
+      # 采样率 1 代表100%全部采集 ，默认0.1 代表10% 的请求踪迹数据会被采集
+      # 生产环境下，请求量非常大，没有必要所有请求的踪迹数据都采集分析，对于网络包括server端压力都是比较大的，可以配置采样率采集一定比例的请求的踪迹数据进行分析即可
+      probability: 1
 eureka:
   client:
     serviceUrl:
-      # ע�ᵽ��Ⱥ���ͰѶ��Eureka server��ַʹ�ö��������������ɣ�ע�ᵽ��ʵ�����Ǽ�Ⱥģʽ�����Ǿ�дһ����ok
+      # 注册到集群，就把多个Eureka server地址使用逗号连接起来即可；注册到单实例（非集群模式），那就写一个就ok
       defaultZone: http://eurekaServer1:18061/eureka,http://eurekaServer2:18062/eureka
   instance:
-    prefer-ip-address: true  #����ʵ������ʾip����������ʾ�������������ϵ�eureka�汾��
+    prefer-ip-address: true  #服务实例中显示ip，而不是显示主机名（兼容老的eureka版本）
+#分布式链路追踪
+logging:
+  level:
+    org.springframework.web.servlet.DispatcherServlet: debug
+    org.springframework.cloud.sleuth: debug

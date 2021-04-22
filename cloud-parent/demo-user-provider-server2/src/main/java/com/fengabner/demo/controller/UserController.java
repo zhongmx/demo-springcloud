@@ -15,6 +15,7 @@ public class UserController {
 
     @GetMapping("/info")
     public String getUser(){
+        //throw new RuntimeException();
         return "zmx, from user provider server 2";
     }
 }
