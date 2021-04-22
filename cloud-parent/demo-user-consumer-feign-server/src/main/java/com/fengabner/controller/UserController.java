@@ -22,4 +22,9 @@ public class UserController {
     public String userInfo() {
         return userFeignClient.getUser();
     }
+
+    @GetMapping("/test")
+    public String test(){
+        return "test ...";
+    }
 }
